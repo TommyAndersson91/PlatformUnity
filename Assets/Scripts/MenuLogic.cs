@@ -22,10 +22,12 @@ public class MenuLogic : MonoBehaviour
     {
       Debug.Log("The Level at menu is " + data.level);
       Debug.Log("The Lives at menu is " + data.health);
-      if (data.level > 1)
-      {
-      PlayLevelTwo.gameObject.SetActive(true);
-      }
+      Debug.Log("World one is completed? : " + data.isWorldOneComplete);
+
+      if (data.isWorldOneComplete == true)
+     {
+       PlayLevelTwo.gameObject.SetActive(true);
+     }
     }
       
     
@@ -34,8 +36,17 @@ public class MenuLogic : MonoBehaviour
 
   private void PlayLevel()
   {
+    PlayerData data = SaveSystem.LoadPlayer();
+    
+    if (data != null)
+    {
+    SceneManager.LoadScene(data.level);
+    }
+    else
+    {
+      SceneManager.LoadScene("Level1");
 
-    SceneManager.LoadScene(EventSystem.current.currentSelectedGameObject.name);
+    }
   } 
 }
 

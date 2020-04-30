@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
   private bool isHurt = false;
   public int level;
   private bool isCollided = false;
+  private bool isDeadByFalling = false;
+  public bool isWorldOneComplete = false;
 
   private delegate void UpdateLives(int value);
   private UpdateLives OnUpdateLives;
@@ -80,15 +82,23 @@ public class PlayerController : MonoBehaviour
 
     level = data.level;
     Lives = data.health;
+    isWorldOneComplete = data.isWorldOneComplete;
   }
 
   private void UpdateHeartsGrid(int value)
   {
     if (value == 0 && SceneManager.GetActiveScene().buildIndex != 0)
     {
+      level = 1;
       Lives = 3;
-      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+      SceneManager.LoadScene("Level1");
     }
+    else if (value > 0 && isDeadByFalling)
+    {
+      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+      isDeadByFalling = false;
+    }
+
     if (HeartsHolder.childCount > value && value > 0 && SceneManager.GetActiveScene().buildIndex != 0)
     {
       Destroy(HeartsHolder.GetChild(HeartsHolder.childCount - 1).gameObject);
@@ -133,7 +143,8 @@ public class PlayerController : MonoBehaviour
     playerAnimator.SetInteger("state", (int)state);
     if (rb.position.y < -15f)
     {
-      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+      isDeadByFalling = true;
+      Lives -= 1;
     }
   }
 
@@ -168,15 +179,16 @@ public class PlayerController : MonoBehaviour
     }
     else if (other.gameObject.tag == "House")
     {
-      if (level < SceneManager.GetActiveScene().buildIndex + 1)
+      if (!SceneManager.GetActiveScene().name.Contains("3"))
       {
         level = SceneManager.GetActiveScene().buildIndex + 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         Debug.Log("Level saved as " + level);
         SavePlayer();
       }
-      if (SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1) != null)
+      else
       {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        isWorldOneComplete = true;
       }
     }
   }
