@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - House
   - Shrooms
+  - Crank
+  - Spikes
   layers:
   - Default
   - TransparentFX
