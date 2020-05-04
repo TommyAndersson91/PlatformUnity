@@ -44,7 +44,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0116677135, y: 0.0142149925}
+  m_Offset: {x: -0.011667728, y: 0.052307606}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -55,7 +55,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.71605146, y: 0.1516943}
+  m_Size: {x: 0.71605146, y: 0.07550907}
   m_EdgeRadius: 0
 --- !u!1 &7542362426327820824
 GameObject:
@@ -70,7 +70,6 @@ GameObject:
   - component: {fileID: 7542362426327820827}
   - component: {fileID: 7542362426327820821}
   - component: {fileID: 7542362426327820822}
-  - component: {fileID: 985148041}
   - component: {fileID: 86377131}
   m_Layer: 0
   m_Name: Player
@@ -163,7 +162,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: b448a69414bc04c07a96296c2350d4f1, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &7542362426327820821
 MonoBehaviour:
@@ -179,6 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   level: 0
+  isWorldOneComplete: 0
   ground:
     serializedVersion: 2
     m_Bits: 256
@@ -208,22 +208,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!70 &985148041
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7542362426327820824}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0664978, y: -0.3988092}
-  m_Size: {x: 1.0832214, y: 1.3529506}
-  m_Direction: 0
 --- !u!70 &86377131
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -237,6 +221,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.10890579, y: -0.30333805}
-  m_Size: {x: 0.89803314, y: 1.2617626}
+  m_Offset: {x: -0.04094696, y: -0.2783985}
+  m_Size: {x: 0.7621155, y: 1.2118835}
   m_Direction: 0

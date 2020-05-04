@@ -283,6 +283,7 @@ public class PlayerController : MonoBehaviour
     }
     //Jumping
     if (Input.GetButtonDown("Jump") && feetColl.IsTouchingLayers(ground))
+    //
     {
       rb.velocity = new Vector2(rb.velocity.x, jumpForce);
       state = State.jumping;
@@ -298,15 +299,20 @@ public class PlayerController : MonoBehaviour
       {
         state = State.falling;
       }
-      else if (state == State.falling)
-      {
-        if (coll.IsTouchingLayers(ground) || feetColl.IsTouchingLayers(ground))
-        {
-          state = State.idle;
-        }
-      }
+      // else if (state == State.falling)
+      // {
+      //   if (feetColl.IsTouchingLayers(ground))
+      //   {
+      //     state = State.idle;
+      //   }
+      // }
     }
-    else if (Mathf.Abs(rb.velocity.x) > Mathf.Epsilon && coll.IsTouchingLayers(ground))
+    if (state == State.falling && Mathf.Abs(rb.velocity.x) > Mathf.Epsilon && feetColl.IsTouchingLayers(ground))
+    {
+      state = State.running;
+    }
+
+    if (Mathf.Abs(rb.velocity.x) > Mathf.Epsilon && coll.IsTouchingLayers(ground))
     {
       //Moving
       state = State.running;
