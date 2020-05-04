@@ -13,10 +13,15 @@ public class PlayerController : MonoBehaviour
   private Collider2D coll;
   private bool colliding = false;
   private bool isHurt = false;
-  public int level;
   private bool isCollided = false;
   private bool isDeadByFalling = false;
   public bool isWorldOneComplete = false;
+  private bool isJumping;
+
+  public int level;
+
+  private float jumpTimeCounter;
+  public float jumpTime;
 
   private delegate void UpdateLives(int value);
   private UpdateLives OnUpdateLives;
@@ -26,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
   [SerializeField] private LayerMask ground;
   [SerializeField] private float speed = 7f;
-  private float jumpForce = 16f;
+  private float jumpForce = 11f;
   [SerializeField] private Text cherryText;
   [SerializeField] private float hurtForce = 20f;
   [SerializeField] private GameObject Heart;
@@ -283,41 +288,40 @@ public class PlayerController : MonoBehaviour
     }
     //Jumping
     if (Input.GetButtonDown("Jump") && feetColl.IsTouchingLayers(ground))
-    //
     {
+      isJumping = true;
       rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+      jumpTimeCounter = jumpTime;
       state = State.jumping;
     }
+    if (jumpTimeCounter > 0 && isJumping && Input.GetKey(KeyCode.Space))
+    {
+      rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+      jumpTimeCounter -= Time.deltaTime;
+    }
+    else
+    {
+      isJumping = false;
+    }
 
+    if (Input.GetKeyUp(KeyCode.Space))
+    {
+      isJumping = false;
+    }
   }
 
   private void AnimationState()
   {
-    if (state == State.jumping || state == State.hurt)
+    if (rb.velocity.y < .1f && !feetColl.IsTouchingLayers(ground))
     {
-      if (rb.velocity.y < .1f)
-      {
-        state = State.falling;
-      }
-      // else if (state == State.falling)
-      // {
-      //   if (feetColl.IsTouchingLayers(ground))
-      //   {
-      //     state = State.idle;
-      //   }
-      // }
-    }
-    if (state == State.falling && Mathf.Abs(rb.velocity.x) > Mathf.Epsilon && feetColl.IsTouchingLayers(ground))
-    {
-      state = State.running;
+      state = State.falling;
     }
 
-    if (Mathf.Abs(rb.velocity.x) > Mathf.Epsilon && coll.IsTouchingLayers(ground))
+    if (Mathf.Abs(rb.velocity.x) > Mathf.Epsilon && feetColl.IsTouchingLayers(ground) && state != State.jumping)
     {
-      //Moving
       state = State.running;
     }
-    else if (Mathf.Abs(rb.velocity.x) < Mathf.Epsilon)
+    else if (Mathf.Abs(rb.velocity.x) < Mathf.Epsilon && Mathf.Abs(rb.velocity.y) < Mathf.Epsilon && feetColl.IsTouchingLayers(ground) && state != State.jumping)
     {
       state = State.idle;
     }
