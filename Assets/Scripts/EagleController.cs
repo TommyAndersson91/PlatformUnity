@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EagleController : MonoBehaviour
 {
-  public float speed = 1.0f;
+  public float speed = 4.0f;
   private Vector2 target;
   
   private Rigidbody2D rb;

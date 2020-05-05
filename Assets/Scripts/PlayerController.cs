@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
   float fGroundedRemember = 0;
   [SerializeField]
-  float fGroundedRememberTime = 0.25f;
+  float fGroundedRememberTime = 0.2f;
 
   private delegate void UpdateLives(int value);
   private UpdateLives OnUpdateLives;
@@ -97,7 +97,6 @@ public class PlayerController : MonoBehaviour
     {
       fJumpPressedRemember = fJumpPressedRememberTime;
     }
-
     if (!colliding)
     {
       Movement();
@@ -151,6 +150,22 @@ public class PlayerController : MonoBehaviour
     if (Input.GetKeyUp(KeyCode.Space))
     {
       isJumping = false;
+    }
+  }
+
+  private void AnimationState()
+  {
+    if (rb.velocity.y < .1f && !feetColl.IsTouchingLayers(ground))
+    {
+      state = State.falling;
+    }
+    if (Mathf.Abs(rb.velocity.x) < 1f && feetColl.IsTouchingLayers(ground) && state != State.jumping)
+    {
+      state = State.idle;
+    }
+    if (Mathf.Abs(rb.velocity.x) > 1f && feetColl.IsTouchingLayers(ground) && state != State.jumping)
+    {
+      state = State.running;
     }
   }
 
@@ -226,6 +241,7 @@ public class PlayerController : MonoBehaviour
       }
       else if (state != State.hurt)
       {
+
         Lives -= 1;
         colliding = true;
         state = State.hurt;
@@ -330,23 +346,6 @@ public class PlayerController : MonoBehaviour
     yield return new WaitForSeconds(0.5f);
     isCollided = false;
     colliding = false;
-  }
-
-  private void AnimationState()
-  {
-    if (rb.velocity.y < .1f && !feetColl.IsTouchingLayers(ground))
-    {
-      state = State.falling;
-    }
-
-    if (Mathf.Abs(rb.velocity.x) > Mathf.Epsilon && feetColl.IsTouchingLayers(ground) && state != State.jumping)
-    {
-      state = State.running;
-    }
-    else if (Mathf.Abs(rb.velocity.x) < Mathf.Epsilon && Mathf.Abs(rb.velocity.y) < Mathf.Epsilon && feetColl.IsTouchingLayers(ground) && state != State.jumping)
-    {
-      state = State.idle;
-    }
   }
 
   private void OnDestroy()
