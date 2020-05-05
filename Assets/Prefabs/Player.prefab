@@ -180,6 +180,8 @@ MonoBehaviour:
   isWorldOneComplete: 0
   level: 0
   jumpTime: 0.3
+  fJumpPressedRememberTime: 0.2
+  fGroundedRememberTime: 0.25
   ground:
     serializedVersion: 2
     m_Bits: 256
@@ -218,7 +220,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 7542362426327820824}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 02dc11f3d95b2406ea6c51e6023b6beb, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

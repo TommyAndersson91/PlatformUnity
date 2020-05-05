@@ -257,6 +257,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: CollectibleHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 8300323461961923088, guid: d28f99602be4c4bc4a561ddf7cfa733b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8300323462285556166, guid: d28f99602be4c4bc4a561ddf7cfa733b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d28f99602be4c4bc4a561ddf7cfa733b, type: 3}
 --- !u!4 &158394441 stripped
@@ -2804,6 +2814,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Collectible
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646192815890633007, guid: 0be99ee59ae954236b91c1c1b10ca7c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0be99ee59ae954236b91c1c1b10ca7c5, type: 3}

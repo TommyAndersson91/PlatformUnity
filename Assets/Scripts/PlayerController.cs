@@ -21,7 +21,15 @@ public class PlayerController : MonoBehaviour
   public int level;
 
   private float jumpTimeCounter;
-  public float jumpTime;
+  public float jumpTime = 0.3f;
+
+  float fJumpPressedRemember = 0;
+  [SerializeField]
+  float fJumpPressedRememberTime = 0.2f;
+
+  float fGroundedRemember = 0;
+  [SerializeField]
+  float fGroundedRememberTime = 0.25f;
 
   private delegate void UpdateLives(int value);
   private UpdateLives OnUpdateLives;
@@ -74,6 +82,76 @@ public class PlayerController : MonoBehaviour
     rb = GetComponent<Rigidbody2D>();
     playerAnimator = GetComponent<Animator>();
     coll = GetComponent<Collider2D>();
+  }
+
+  private void Update()
+  {
+    fGroundedRemember -= Time.deltaTime;
+    if (feetColl.IsTouchingLayers(ground))
+    {
+      fGroundedRemember = fGroundedRememberTime;
+    }
+
+    fJumpPressedRemember -= Time.deltaTime;
+    if (Input.GetButtonDown("Jump"))
+    {
+      fJumpPressedRemember = fJumpPressedRememberTime;
+    }
+
+    if (!colliding)
+    {
+      Movement();
+      AnimationState();
+    }
+    //sets animation based on Enumerator state
+    playerAnimator.SetInteger("state", (int)state);
+    if (rb.position.y < -15f)
+    {
+      isDeadByFalling = true;
+      Lives -= 1;
+    }
+  }
+
+  private void Movement()
+  {
+    float hDirection = Input.GetAxis("Horizontal");
+
+    //Moving Left
+    if (hDirection < 0)
+    {
+      rb.velocity = new Vector2(-speed, rb.velocity.y);
+      transform.localScale = new Vector2(-1, 1);
+    }
+    //Moving RIght
+    else if (hDirection > 0)
+    {
+      rb.velocity = new Vector2(speed, rb.velocity.y);
+      transform.localScale = new Vector2(1, 1);
+    }
+    //Jumping
+    if ((fJumpPressedRemember > 0) && (fGroundedRemember > 0))
+    {
+      fJumpPressedRemember = 0;
+      fGroundedRemember = 0;
+      isJumping = true;
+      rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+      jumpTimeCounter = jumpTime;
+      state = State.jumping;
+    }
+    if (jumpTimeCounter > 0 && isJumping && Input.GetKey(KeyCode.Space))
+    {
+      rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+      jumpTimeCounter -= Time.deltaTime;
+    }
+    else
+    {
+      isJumping = false;
+    }
+
+    if (Input.GetKeyUp(KeyCode.Space))
+    {
+      isJumping = false;
+    }
   }
 
   public void SavePlayer()
@@ -134,22 +212,6 @@ public class PlayerController : MonoBehaviour
     {
       Lives += 1;
       Cherries = 0;
-    }
-  }
-
-  private void Update()
-  {
-    if (!colliding)
-    {
-      Movement();
-      AnimationState();
-    }
-    //sets animation based on Enumerator state
-    playerAnimator.SetInteger("state", (int)state);
-    if (rb.position.y < -15f)
-    {
-      isDeadByFalling = true;
-      Lives -= 1;
     }
   }
 
@@ -268,46 +330,6 @@ public class PlayerController : MonoBehaviour
     yield return new WaitForSeconds(0.5f);
     isCollided = false;
     colliding = false;
-  }
-
-  private void Movement()
-  {
-    float hDirection = Input.GetAxis("Horizontal");
-
-    //Moving Left
-    if (hDirection < 0)
-    {
-      rb.velocity = new Vector2(-speed, rb.velocity.y);
-      transform.localScale = new Vector2(-1, 1);
-    }
-    //Moving RIght
-    else if (hDirection > 0)
-    {
-      rb.velocity = new Vector2(speed, rb.velocity.y);
-      transform.localScale = new Vector2(1, 1);
-    }
-    //Jumping
-    if (Input.GetButtonDown("Jump") && feetColl.IsTouchingLayers(ground))
-    {
-      isJumping = true;
-      rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-      jumpTimeCounter = jumpTime;
-      state = State.jumping;
-    }
-    if (jumpTimeCounter > 0 && isJumping && Input.GetKey(KeyCode.Space))
-    {
-      rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-      jumpTimeCounter -= Time.deltaTime;
-    }
-    else
-    {
-      isJumping = false;
-    }
-
-    if (Input.GetKeyUp(KeyCode.Space))
-    {
-      isJumping = false;
-    }
   }
 
   private void AnimationState()
