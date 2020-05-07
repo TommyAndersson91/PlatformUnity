@@ -17,8 +17,13 @@ public class PlayerController : MonoBehaviour
   private bool isDeadByFalling = false;
   public bool isWorldOneComplete = false;
   private bool isJumping;
+  public GameObject firePrefab; 
+  public Transform firePoint;
 
   public int level;
+
+  private float facingDirection;
+  private bool isRotated = false;
 
   private float jumpTimeCounter;
   public float jumpTime = 0.3f;
@@ -82,10 +87,17 @@ public class PlayerController : MonoBehaviour
     rb = GetComponent<Rigidbody2D>();
     playerAnimator = GetComponent<Animator>();
     coll = GetComponent<Collider2D>();
+    facingDirection = Input.GetAxis("Horizontal");
   }
 
   private void Update()
   {
+
+    if (Input.GetButtonDown("Fire1"))
+    {
+      Shoot();
+    }
+
     fGroundedRemember -= Time.deltaTime;
     if (feetColl.IsTouchingLayers(ground))
     {
@@ -111,21 +123,38 @@ public class PlayerController : MonoBehaviour
     }
   }
 
+  void Shoot()
+  {
+    Instantiate(firePrefab, firePoint.position, firePoint.rotation);
+
+  }
+
   private void Movement()
   {
     float hDirection = Input.GetAxis("Horizontal");
-
+    
     //Moving Left
     if (hDirection < 0)
     {
       rb.velocity = new Vector2(-speed, rb.velocity.y);
-      transform.localScale = new Vector2(-1, 1);
+      // transform.localScale = new Vector2(-1, 1);
+      if (!isRotated)
+      {
+        transform.Rotate(0, 180, 0);
+        isRotated = true;
+      }
     }
     //Moving RIght
     else if (hDirection > 0)
     {
       rb.velocity = new Vector2(speed, rb.velocity.y);
-      transform.localScale = new Vector2(1, 1);
+      // transform.localScale = new Vector2(1, 1);
+      if (isRotated)
+      {
+      transform.Rotate(0, 180, 0);
+      isRotated = false;
+      }
+
     }
     //Jumping
     if ((fJumpPressedRemember > 0) && (fGroundedRemember > 0))
@@ -238,6 +267,7 @@ public class PlayerController : MonoBehaviour
       if (state == State.falling && coll.bounds.min.y > other.rigidbody.GetComponent<Collider2D>().bounds.center.y)
       {
         Destroy(other.gameObject);
+        GameObject.Find("EnemiesController").GetComponent<Enemy>().Die(other.transform);
       }
       else if (state != State.hurt)
       {
@@ -332,6 +362,11 @@ public class PlayerController : MonoBehaviour
           transform.localScale = new Vector2(1, 1);
         }
       }
+      else if (other.gameObject.tag == "WizardHat")
+      {
+        
+      }
+
       StartCoroutine(TriggerWait());
     }
   }

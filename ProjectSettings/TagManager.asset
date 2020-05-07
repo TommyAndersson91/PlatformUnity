@@ -10,6 +10,7 @@ TagManager:
   - Shrooms
   - Crank
   - Spikes
+  - WizardHat
   layers:
   - Default
   - TransparentFX
