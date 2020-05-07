@@ -212,6 +212,9 @@ MonoBehaviour:
   firePrefab: {fileID: 1765763505073265630, guid: aba3ab1b4157241eca8e5bdc84e1692b,
     type: 3}
   firePoint: {fileID: 2065761788}
+  wizardHat: {fileID: 543755635000140637, guid: 4e6de62eb38bd435fb0b91c26408ef92,
+    type: 3}
+  ItemHolder: {fileID: 0}
   level: 0
   jumpTime: 0.3
   fJumpPressedRememberTime: 0.2
@@ -221,7 +224,7 @@ MonoBehaviour:
     m_Bits: 256
   speed: 7
   cherryText: {fileID: 0}
-  hurtForce: 20
+  hurtForce: 25
   Heart: {fileID: 543755635000140637, guid: 52d375f6d048c41d08ea9f17a7e85c37, type: 3}
   HeartsHolder: {fileID: 0}
   feetColl: {fileID: 1018566076}

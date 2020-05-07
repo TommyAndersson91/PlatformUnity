@@ -17,8 +17,13 @@ public class PlayerController : MonoBehaviour
   private bool isDeadByFalling = false;
   public bool isWorldOneComplete = false;
   private bool isJumping;
-  public GameObject firePrefab; 
+  public GameObject firePrefab;
   public Transform firePoint;
+
+  public GameObject wizardHat;
+  public Transform ItemHolder;
+
+  private GameObject[] items;
 
   public int level;
 
@@ -46,7 +51,7 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private float speed = 7f;
   private float jumpForce = 11f;
   [SerializeField] private Text cherryText;
-  [SerializeField] private float hurtForce = 20f;
+  [SerializeField] private float hurtForce = 25f;
   [SerializeField] private GameObject Heart;
   [SerializeField] private Transform HeartsHolder;
   [SerializeField] private Collider2D feetColl;
@@ -93,7 +98,7 @@ public class PlayerController : MonoBehaviour
   private void Update()
   {
 
-    if (Input.GetButtonDown("Fire1"))
+    if (Input.GetButtonDown("Fire1") && ItemHolder.Find("WizardHat(Clone)"))
     {
       Shoot();
     }
@@ -111,8 +116,8 @@ public class PlayerController : MonoBehaviour
     }
     if (!colliding)
     {
-      Movement();
       AnimationState();
+      Movement();
     }
     //sets animation based on Enumerator state
     playerAnimator.SetInteger("state", (int)state);
@@ -132,29 +137,35 @@ public class PlayerController : MonoBehaviour
   private void Movement()
   {
     float hDirection = Input.GetAxis("Horizontal");
-    
+
     //Moving Left
     if (hDirection < 0)
     {
       rb.velocity = new Vector2(-speed, rb.velocity.y);
-      // transform.localScale = new Vector2(-1, 1);
       if (!isRotated)
       {
-        transform.Rotate(0, 180, 0);
+        transform.rotation = new Quaternion(0, 180, 0, 0);
         isRotated = true;
+        if (transform.rotation == new Quaternion(0, 0, 0, 0))
+        {
+          transform.Rotate(0, 180, 0);
+        }
       }
     }
     //Moving RIght
     else if (hDirection > 0)
     {
       rb.velocity = new Vector2(speed, rb.velocity.y);
-      // transform.localScale = new Vector2(1, 1);
       if (isRotated)
       {
-      transform.Rotate(0, 180, 0);
-      isRotated = false;
+        transform.rotation = new Quaternion(0, 0, 0, 0);
+        // transform.Rotate(0, 180, 0);
+        isRotated = false;
+        if (transform.rotation == new Quaternion(0, 180, 0, 0))
+        {
+          transform.Rotate(0, 180, 0);
+        }
       }
-
     }
     //Jumping
     if ((fJumpPressedRemember > 0) && (fGroundedRemember > 0))
@@ -279,14 +290,12 @@ public class PlayerController : MonoBehaviour
         {
           // Enemy is to my right. Therefore i should be damaged and move left
           rb.velocity = new Vector2(-hurtForce, hurtForce);
-          transform.localScale = new Vector2(-1, 1);
 
         }
         else
         {
           //Enemy is to my left. Therefore i should be damaged and move right
           rb.velocity = new Vector2(hurtForce, hurtForce);
-          transform.localScale = new Vector2(1, 1);
         }
       }
     }
@@ -329,6 +338,12 @@ public class PlayerController : MonoBehaviour
         Destroy(other.gameObject);
         Cherries += 1;
       }
+      else if(other.tag == "WizardHat")
+      {
+        Destroy(other.gameObject);
+        GameObject hat = Instantiate(wizardHat, default, Quaternion.identity);
+        hat.transform.SetParent(ItemHolder);
+      }
       else if (other.gameObject.tag == "Shrooms" && Lives < 10)
       {
         Destroy(other.gameObject);
@@ -364,7 +379,7 @@ public class PlayerController : MonoBehaviour
       }
       else if (other.gameObject.tag == "WizardHat")
       {
-        
+
       }
 
       StartCoroutine(TriggerWait());

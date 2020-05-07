@@ -6,16 +6,20 @@ public class FireController : MonoBehaviour
 {
 
   public float speed = 20f;
-  public Rigidbody2D rigidbody;
   // Start is called before the first frame update
   void Start()
   {
-    rigidbody.velocity = transform.right * speed;
+    GetComponent<Rigidbody2D>().velocity = transform.right * speed;
   }
 
   private void OnTriggerEnter2D(Collider2D other)
   {
-    
+    if (other.tag == "Enemy")
+    {
+      GameObject.Find("EnemiesController").GetComponent<Enemy>().Die(other.transform);
+      Destroy(other.gameObject);
+      Destroy(gameObject);
+    }
   }
 
 }
