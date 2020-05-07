@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
   private GameObject[] items;
 
   public int level;
+  private int fireBalls;
 
   private float facingDirection;
   private bool isRotated = false;
@@ -98,7 +99,7 @@ public class PlayerController : MonoBehaviour
   private void Update()
   {
 
-    if (Input.GetButtonDown("Fire1") && ItemHolder.Find("WizardHat(Clone)"))
+    if (Input.GetButtonDown("Fire1") && ItemHolder.Find("WizardHat(Clone)") && fireBalls > 0)
     {
       Shoot();
     }
@@ -131,6 +132,19 @@ public class PlayerController : MonoBehaviour
   void Shoot()
   {
     Instantiate(firePrefab, firePoint.position, firePoint.rotation);
+    fireBalls -= 1;
+    Image hat = ItemHolder.Find("WizardHat(Clone)").transform.GetComponent<Image>();
+    hat.fillAmount -= 0.33f;
+    if (fireBalls < 1)
+    {
+      Destroy(ItemHolder.Find("WizardHat(Clone)").gameObject);
+    }
+    // RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, Vector2.right);
+
+    // if (hitInfo)
+    // {
+    //   Debug.Log(hitInfo.transform.name);
+    // }
 
   }
 
@@ -340,6 +354,7 @@ public class PlayerController : MonoBehaviour
       }
       else if(other.tag == "WizardHat")
       {
+        fireBalls = 3;
         Destroy(other.gameObject);
         GameObject hat = Instantiate(wizardHat, default, Quaternion.identity);
         hat.transform.SetParent(ItemHolder);
@@ -367,14 +382,12 @@ public class PlayerController : MonoBehaviour
         {
           // Enemy is to my right. Therefore i should be damaged and move left
           rb.velocity = new Vector2(-hurtForce, hurtForce);
-          transform.localScale = new Vector2(-1, 1);
 
         }
         else
         {
           //Enemy is to my left. Therefore i should be damaged and move right
           rb.velocity = new Vector2(hurtForce, hurtForce);
-          transform.localScale = new Vector2(1, 1);
         }
       }
       else if (other.gameObject.tag == "WizardHat")

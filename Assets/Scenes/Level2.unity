@@ -6604,6 +6604,11 @@ PrefabInstance:
       propertyPath: HeartsHolder
       value: 
       objectReference: {fileID: 9125657681841727012}
+    - target: {fileID: 7542362426327820821, guid: 1a156fe41917e4ffca267d9f7399c088,
+        type: 3}
+      propertyPath: ItemHolder
+      value: 
+      objectReference: {fileID: 9125657681841727014}
     - target: {fileID: 7542362426327820824, guid: 1a156fe41917e4ffca267d9f7399c088,
         type: 3}
       propertyPath: m_Name
@@ -41541,6 +41546,16 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1794691723369131061, guid: 8941882ce506446cabc54ed70a06be7f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1794691723369131061, guid: 8941882ce506446cabc54ed70a06be7f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.21
+      objectReference: {fileID: 0}
     - target: {fileID: 1934156191866078152, guid: 8941882ce506446cabc54ed70a06be7f,
         type: 3}
       propertyPath: m_Name
@@ -47502,3 +47517,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &9125657681841727014 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 842024386, guid: 87f0f663c976b42a8a64f54218d0b023,
+    type: 3}
+  m_PrefabInstance: {fileID: 9125657681841727011}
+  m_PrefabAsset: {fileID: 0}

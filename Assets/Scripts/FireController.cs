@@ -12,12 +12,23 @@ public class FireController : MonoBehaviour
     GetComponent<Rigidbody2D>().velocity = transform.right * speed;
   }
 
+  private void Update() {
+    if (GetComponent<Renderer>().isVisible == false)
+    {
+      Destroy(gameObject);
+    }
+  }
+
   private void OnTriggerEnter2D(Collider2D other)
   {
     if (other.tag == "Enemy")
     {
       GameObject.Find("EnemiesController").GetComponent<Enemy>().Die(other.transform);
       Destroy(other.gameObject);
+      Destroy(gameObject);
+    }
+    else if (other.transform.name == "Foreground")
+    {
       Destroy(gameObject);
     }
   }
