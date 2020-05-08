@@ -79,7 +79,4 @@ public class FrogController : MonoBehaviour
     yield return new WaitForSeconds(1f);
     isMoving = false;
   }
-
-  private void OnDestroy() {
-  }
 }

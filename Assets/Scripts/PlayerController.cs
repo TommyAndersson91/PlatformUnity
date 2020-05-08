@@ -311,6 +311,7 @@ public class PlayerController : MonoBehaviour
     {
       if (state == State.falling && coll.bounds.min.y > other.rigidbody.GetComponent<Collider2D>().bounds.center.y)
       {
+        other.gameObject.GetComponent<Animator>().SetTrigger("hit");
         if (other.transform.position.x > transform.position.x)
         {
           rb.velocity = new Vector2(-10f, 20f);

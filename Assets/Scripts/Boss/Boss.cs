@@ -14,39 +14,43 @@ public class Boss : MonoBehaviour
   public Collider2D weaponOneCol;
   public Collider2D weaponTwoCol;
   public Collider2D playerColl;
-  public Rigidbody2D rb; 
-  
+  public Rigidbody2D rb;
+
 
   // Start is called before the first frame update
   void Start()
+  {
+    rb = GetComponent<Rigidbody2D>();
+    playerColl = GameObject.FindGameObjectWithTag("Player").GetComponent<CapsuleCollider2D>();
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    healthBar.fillAmount = health / 100f;
+    healthText.text = health.ToString() + " %";
+    if (weaponOneCol.IsTouching(playerColl) || weaponTwoCol.IsTouching(playerColl))
     {
-        rb = GetComponent<Rigidbody2D>();
-        playerColl = GameObject.FindGameObjectWithTag("Player").GetComponent<CapsuleCollider2D>();
+      Debug.Log("Hitting the player");
+      GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().TakeDamage(transform);
     }
+  }
 
-    // Update is called once per frame
-    void Update()
+  public void TakeDamage()
+  {
+    health -= 10;
+    GameObject.Find("LevelLogic").GetComponent<BossLevelLogic>().SpawnEagles();
+    if (health <= 40)
     {
-        healthBar.fillAmount =  health / 100f;
-        healthText.text = health.ToString() + " %";
-        if (weaponOneCol.IsTouching(playerColl) || weaponTwoCol.IsTouching(playerColl))
-        {
-          Debug.Log("Hitting the player");
-          GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().TakeDamage(transform);
-        }
+      GameObject.Find("LevelLogic").GetComponent<BossLevelLogic>().SpawnFrogs();
     }
+  }
 
-    public void TakeDamage()
-    {
-      health -= 10;
-      GameObject.Find("LevelLogic").GetComponent<BossLevelLogic>().SpawnEagles();
-    }
+  // private void OnCollisionEnter2D(Collision2D other) {
+  //   if (other.gameObject.tag == "Player")
+  //   {
 
-    // private void OnCollisionEnter2D(Collision2D other) {
-    //   if (other.gameObject.tag == "Player")
-    //   {
+  //   }
 
-    //   }
-      
-    // }
+  // }
 }

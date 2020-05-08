@@ -47,7 +47,9 @@
   <ItemGroup>
      <Compile Include="Assets\AttackBehavior.cs" />
      <Compile Include="Assets\BossEagleController.cs" />
+     <Compile Include="Assets\BossFrog.cs" />
      <Compile Include="Assets\BossLevelLogic.cs" />
+     <Compile Include="Assets\HitBehavior.cs" />
      <Compile Include="Assets\IdleBehavior.cs" />
      <Compile Include="Assets\RunBehavior.cs" />
      <Compile Include="Assets\Scripts\Boss\Boss.cs" />

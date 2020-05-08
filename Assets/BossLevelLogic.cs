@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class BossLevelLogic : MonoBehaviour
 {
-  public Transform eagleSpawnOne;
-  public Transform eagleSpawnTwo;
   public GameObject eagle;
-
+  public GameObject frog;
   // Start is called before the first frame update
   void Start()
   {
@@ -22,11 +20,21 @@ public class BossLevelLogic : MonoBehaviour
 
   public void SpawnEagles()
   {
-    Vector2 RandomPos = new Vector2(Random.Range(-35, 25), 30f);
-    Vector2 RandomPosTwo = new Vector2(Random.Range(-35, 25), 30f);
+    Vector2 RandomPos = new Vector2(Random.Range(-35f, 25f), 30f);
+    Vector2 RandomPosTwo = new Vector2(Random.Range(-35f, 25f), 30f);
 
-    GameObject eagleOne = Instantiate(eagle, RandomPos, transform.rotation);
-    GameObject eagleTwo = Instantiate(eagle, RandomPosTwo, transform.rotation);
+    Instantiate(eagle, RandomPos, transform.rotation);
+    Instantiate(eagle, RandomPosTwo, transform.rotation);
+  }
 
+  public void SpawnFrogs()
+  {
+    // Vector2 RandomPos = new Vector2(Random.Range(-35, 25), 20f);
+    // Vector2 RandomPosTwo = new Vector2(Random.Range(-35, 25), 20f);
+
+    Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);
+    Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);
+    Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);
+    Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);
   }
 }

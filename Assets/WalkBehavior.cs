@@ -19,7 +19,7 @@ public class WalkBehavior : StateMachineBehaviour
   {
     timer = Random.Range(minTime, maxTime);
     playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-    speed = 4f;
+    speed = 5f;
     attackRange = 3f;
   }
 
