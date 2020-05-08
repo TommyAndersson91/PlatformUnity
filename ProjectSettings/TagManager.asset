@@ -11,6 +11,8 @@ TagManager:
   - Crank
   - Spikes
   - WizardHat
+  - Weapon
+  - Boss
   layers:
   - Default
   - TransparentFX

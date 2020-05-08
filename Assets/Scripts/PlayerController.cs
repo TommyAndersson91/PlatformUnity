@@ -139,13 +139,6 @@ public class PlayerController : MonoBehaviour
     {
       Destroy(ItemHolder.Find("WizardHat(Clone)").gameObject);
     }
-    // RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, Vector2.right);
-
-    // if (hitInfo)
-    // {
-    //   Debug.Log(hitInfo.transform.name);
-    // }
-
   }
 
   private void Movement()
@@ -243,7 +236,8 @@ public class PlayerController : MonoBehaviour
     {
       level = 1;
       Lives = 3;
-      SceneManager.LoadScene("Level1");
+      // SceneManager.LoadScene("Level1");
+      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     else if (value > 0 && isDeadByFalling)
     {
@@ -266,9 +260,7 @@ public class PlayerController : MonoBehaviour
         GameObject heart = Instantiate(Heart, new Vector3(0, 0, 10), Quaternion.identity) as GameObject;
         heart.transform.SetParent(HeartsHolder);
       }
-
     }
-
   }
 
   private void UpdateCherryText(int value)
@@ -284,33 +276,50 @@ public class PlayerController : MonoBehaviour
     }
   }
 
+  public void TakeDamage(Transform other)
+  {
+    Lives -= 1;
+    colliding = true;
+    state = State.hurt;
+    if (other.position.x > transform.position.x)
+    {
+      // Enemy is to my right. Therefore i should be damaged and move left
+      rb.velocity = new Vector2(-hurtForce, hurtForce);
+    }
+    else
+    {
+      //Enemy is to my left. Therefore i should be damaged and move right
+      rb.velocity = new Vector2(hurtForce, hurtForce);
+    }
+  }
+
   private void OnCollisionEnter2D(Collision2D other)
   {
     if (other.gameObject.tag == "Enemy")
     {
-
-      if (state == State.falling && coll.bounds.min.y > other.rigidbody.GetComponent<Collider2D>().bounds.center.y)
+      if (coll.bounds.min.y > other.rigidbody.GetComponent<Collider2D>().bounds.min.y)
       {
         Destroy(other.gameObject);
         GameObject.Find("EnemiesController").GetComponent<Enemy>().Die(other.transform);
       }
       else if (state != State.hurt)
       {
-
-        Lives -= 1;
-        colliding = true;
-        state = State.hurt;
-        if (other.gameObject.transform.position.x > transform.position.x)
+        TakeDamage(other.transform);
+      }
+    }
+    else if (other.gameObject.tag == "Boss")
+    {
+      if (state == State.falling && coll.bounds.min.y > other.rigidbody.GetComponent<Collider2D>().bounds.center.y)
+      {
+        if (other.transform.position.x > transform.position.x)
         {
-          // Enemy is to my right. Therefore i should be damaged and move left
-          rb.velocity = new Vector2(-hurtForce, hurtForce);
-
+          rb.velocity = new Vector2(-10f, 20f);
         }
         else
         {
-          //Enemy is to my left. Therefore i should be damaged and move right
-          rb.velocity = new Vector2(hurtForce, hurtForce);
+          rb.velocity = new Vector2(10f, 20f);
         }
+        GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>().TakeDamage();
       }
     }
     else if (other.gameObject.tag == "House")
@@ -352,7 +361,7 @@ public class PlayerController : MonoBehaviour
         Destroy(other.gameObject);
         Cherries += 1;
       }
-      else if(other.tag == "WizardHat")
+      else if (other.tag == "WizardHat")
       {
         fireBalls = 3;
         Destroy(other.gameObject);
@@ -375,20 +384,7 @@ public class PlayerController : MonoBehaviour
       }
       else if (other.gameObject.tag == "Spikes")
       {
-        state = State.hurt;
-        Lives -= 1;
-        colliding = true;
-        if (other.gameObject.transform.position.x > transform.position.x)
-        {
-          // Enemy is to my right. Therefore i should be damaged and move left
-          rb.velocity = new Vector2(-hurtForce, hurtForce);
-
-        }
-        else
-        {
-          //Enemy is to my left. Therefore i should be damaged and move right
-          rb.velocity = new Vector2(hurtForce, hurtForce);
-        }
+        TakeDamage(other.transform);
       }
       else if (other.gameObject.tag == "WizardHat")
       {

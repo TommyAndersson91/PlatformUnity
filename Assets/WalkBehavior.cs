@@ -10,6 +10,8 @@ public class WalkBehavior : StateMachineBehaviour
   public float minTime;
   public float maxTime;
 
+  public float attackRange;
+
   private Transform playerPos;
 
   // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -18,6 +20,7 @@ public class WalkBehavior : StateMachineBehaviour
     timer = Random.Range(minTime, maxTime);
     playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     speed = 4f;
+    attackRange = 3f;
   }
 
   // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -41,7 +44,18 @@ public class WalkBehavior : StateMachineBehaviour
     {
       animator.transform.localScale = new Vector2(-0.4f, 0.4f);
     }
-
+    float distance = Vector2.Distance(playerPos.position, animator.transform.position);
+    if (distance < attackRange)
+    {
+      if (Random.Range(0, 2) == 0)
+      {
+        animator.SetTrigger("attack1");
+      }
+      else
+      {
+        animator.SetTrigger("attack3");
+      }
+    }
   }
 
   // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
