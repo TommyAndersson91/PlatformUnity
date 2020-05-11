@@ -18,7 +18,7 @@ public class RunBehavior : StateMachineBehaviour
   {
     timer = Random.Range(minTime, maxTime);
     playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-    speed = 6f;
+    speed = 7f;
     attackRange = 3f;
   }
 

@@ -6,15 +6,17 @@ using UnityEngine.UI;
 public class Boss : MonoBehaviour
 {
 
-  public int health = 100;
+  public int health = 20;
   private enum State { idle, walk, running, jumping, falling, hurt, dead }
   public Image healthBar;
   public Text healthText;
+  public bool isAttacking = false;
 
   public Collider2D weaponOneCol;
   public Collider2D weaponTwoCol;
   public Collider2D playerColl;
   public Rigidbody2D rb;
+  public Animator anim;
 
 
   // Start is called before the first frame update
@@ -22,6 +24,7 @@ public class Boss : MonoBehaviour
   {
     rb = GetComponent<Rigidbody2D>();
     playerColl = GameObject.FindGameObjectWithTag("Player").GetComponent<CapsuleCollider2D>();
+    anim = GetComponent<Animator>();
   }
 
   // Update is called once per frame
@@ -29,9 +32,8 @@ public class Boss : MonoBehaviour
   {
     healthBar.fillAmount = health / 100f;
     healthText.text = health.ToString() + " %";
-    if (weaponOneCol.IsTouching(playerColl) || weaponTwoCol.IsTouching(playerColl))
+    if (weaponOneCol.IsTouching(playerColl) && isAttacking || weaponTwoCol.IsTouching(playerColl) && isAttacking)
     {
-      Debug.Log("Hitting the player");
       GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().TakeDamage(transform);
     }
   }
@@ -44,13 +46,9 @@ public class Boss : MonoBehaviour
     {
       GameObject.Find("LevelLogic").GetComponent<BossLevelLogic>().SpawnFrogs();
     }
+    if (health <= 0)
+    {
+      anim.SetTrigger("dead");
+    }
   }
-
-  // private void OnCollisionEnter2D(Collision2D other) {
-  //   if (other.gameObject.tag == "Player")
-  //   {
-
-  //   }
-
-  // }
 }

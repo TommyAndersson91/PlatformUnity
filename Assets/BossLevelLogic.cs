@@ -6,6 +6,8 @@ public class BossLevelLogic : MonoBehaviour
 {
   public GameObject eagle;
   public GameObject frog;
+  public GameObject cherry;
+  float timer = 6f;
   // Start is called before the first frame update
   void Start()
   {
@@ -15,23 +17,25 @@ public class BossLevelLogic : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-
+    if (timer <= 0)
+    {
+      Instantiate(cherry, new Vector2(Random.Range(-30f, 20f), 5f), transform.rotation);
+      timer = 6f;
+    }
+    else
+    {
+        timer -= Time.deltaTime;
+    }
   }
 
   public void SpawnEagles()
   {
-    Vector2 RandomPos = new Vector2(Random.Range(-35f, 25f), 30f);
-    Vector2 RandomPosTwo = new Vector2(Random.Range(-35f, 25f), 30f);
-
-    Instantiate(eagle, RandomPos, transform.rotation);
-    Instantiate(eagle, RandomPosTwo, transform.rotation);
+    Instantiate(eagle, new Vector2(Random.Range(-35f, 25f), 30f), transform.rotation);
+    Instantiate(eagle, new Vector2(Random.Range(-35f, 25f), 30f), transform.rotation);
   }
 
   public void SpawnFrogs()
   {
-    // Vector2 RandomPos = new Vector2(Random.Range(-35, 25), 20f);
-    // Vector2 RandomPosTwo = new Vector2(Random.Range(-35, 25), 20f);
-
     Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);
     Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);
     Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);

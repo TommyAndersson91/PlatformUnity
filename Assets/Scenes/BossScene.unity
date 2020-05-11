@@ -293,6 +293,11 @@ PrefabInstance:
       propertyPath: HeartsHolder
       value: 
       objectReference: {fileID: 754786139}
+    - target: {fileID: 7542362426327820821, guid: 1a156fe41917e4ffca267d9f7399c088,
+        type: 3}
+      propertyPath: cherryText
+      value: 
+      objectReference: {fileID: 1561924411}
     - target: {fileID: 7542362426327820824, guid: 1a156fe41917e4ffca267d9f7399c088,
         type: 3}
       propertyPath: m_Name
@@ -1068,6 +1073,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1561924411 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9125657681745637365, guid: 87f0f663c976b42a8a64f54218d0b023,
+    type: 3}
+  m_PrefabInstance: {fileID: 754786137}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1878739763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,6 +1197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eagle: {fileID: 7635368213632987193, guid: 7a100087cd8054ac187bffcfc7e97813, type: 3}
   frog: {fileID: 7285748580968173269, guid: 9ecb5cb57670b4c949753e7a33a8b2e3, type: 3}
+  cherry: {fileID: 7646192815890633007, guid: 0be99ee59ae954236b91c1c1b10ca7c5, type: 3}
 --- !u!4 &1903679708
 Transform:
   m_ObjectHideFlags: 0
@@ -5245,7 +5263,7 @@ PrefabInstance:
     - target: {fileID: 2981589918804074186, guid: 4f715419bb9d24602900c49bda23325e,
         type: 3}
       propertyPath: health
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2982282055555935124, guid: 4f715419bb9d24602900c49bda23325e,
         type: 3}
