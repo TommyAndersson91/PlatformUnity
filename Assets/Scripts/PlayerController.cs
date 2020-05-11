@@ -17,6 +17,11 @@ public class PlayerController : MonoBehaviour
   private bool isDeadByFalling = false;
   public bool isWorldOneComplete = false;
   private bool isJumping;
+
+  private Joystick joystick;
+
+  public Button jumpButton;
+
   public GameObject firePrefab;
   public Transform firePoint;
 
@@ -26,7 +31,7 @@ public class PlayerController : MonoBehaviour
   private GameObject[] items;
 
   public int level;
-  private int fireBalls;
+  public int fireBalls;
 
   private float facingDirection;
   private bool isRotated = false;
@@ -90,6 +95,7 @@ public class PlayerController : MonoBehaviour
 
   private void Start()
   {
+    joystick = GameObject.Find("PlayerUI").GetComponent<UIController>().joystick;
     rb = GetComponent<Rigidbody2D>();
     playerAnimator = GetComponent<Animator>();
     coll = GetComponent<Collider2D>();
@@ -98,12 +104,6 @@ public class PlayerController : MonoBehaviour
 
   private void Update()
   {
-
-    if (Input.GetButtonDown("Fire1") && ItemHolder.Find("WizardHat(Clone)") && fireBalls > 0)
-    {
-      Shoot();
-    }
-
     fGroundedRemember -= Time.deltaTime;
     if (feetColl.IsTouchingLayers(ground))
     {
@@ -111,8 +111,9 @@ public class PlayerController : MonoBehaviour
     }
 
     fJumpPressedRemember -= Time.deltaTime;
-    if (Input.GetButtonDown("Jump"))
-    {
+    if (joystick.Vertical > .5f)
+      // if (Input.GetButtonDown("Jump"))
+      {
       fJumpPressedRemember = fJumpPressedRememberTime;
     }
     if (!colliding)
@@ -129,8 +130,10 @@ public class PlayerController : MonoBehaviour
     }
   }
 
-  void Shoot()
+ public void Shoot()
   {
+    if (ItemHolder.Find("WizardHat(Clone)") && fireBalls > 0)
+    {
     Instantiate(firePrefab, firePoint.position, firePoint.rotation);
     fireBalls -= 1;
     Image hat = ItemHolder.Find("WizardHat(Clone)").transform.GetComponent<Image>();
@@ -139,14 +142,18 @@ public class PlayerController : MonoBehaviour
     {
       Destroy(ItemHolder.Find("WizardHat(Clone)").gameObject);
     }
+    }
   }
 
   private void Movement()
   {
-    float hDirection = Input.GetAxis("Horizontal");
+    // float hDirection = Input.GetAxis("Horizontal");
+
+    float hDirection = joystick.Horizontal;
+
 
     //Moving Left
-    if (hDirection < 0)
+    if (hDirection < -.1f && !isJumping || isJumping && hDirection < 0)
     {
       rb.velocity = new Vector2(-speed, rb.velocity.y);
       if (!isRotated)
@@ -160,7 +167,7 @@ public class PlayerController : MonoBehaviour
       }
     }
     //Moving RIght
-    else if (hDirection > 0)
+    else if (hDirection > .1f && !isJumping || isJumping && hDirection > 0)
     {
       rb.velocity = new Vector2(speed, rb.velocity.y);
       if (isRotated)
@@ -174,6 +181,7 @@ public class PlayerController : MonoBehaviour
         }
       }
     }
+
     //Jumping
     if ((fJumpPressedRemember > 0) && (fGroundedRemember > 0))
     {
@@ -184,7 +192,7 @@ public class PlayerController : MonoBehaviour
       jumpTimeCounter = jumpTime;
       state = State.jumping;
     }
-    if (jumpTimeCounter > 0 && isJumping && Input.GetKey(KeyCode.Space))
+    if (jumpTimeCounter > 0 && isJumping && joystick.Vertical > .5f)
     {
       rb.velocity = new Vector2(rb.velocity.x, jumpForce);
       jumpTimeCounter -= Time.deltaTime;
@@ -193,9 +201,9 @@ public class PlayerController : MonoBehaviour
     {
       isJumping = false;
     }
-
-    if (Input.GetKeyUp(KeyCode.Space))
-    {
+    if (joystick.Vertical < .5f)
+      // if (Input.GetKeyUp(KeyCode.Space))
+      {
       isJumping = false;
     }
   }
@@ -368,6 +376,7 @@ public class PlayerController : MonoBehaviour
         Destroy(other.gameObject);
         GameObject hat = Instantiate(wizardHat, default, Quaternion.identity);
         hat.transform.SetParent(ItemHolder);
+
       }
       else if (other.gameObject.tag == "Shrooms" && Lives < 10)
       {

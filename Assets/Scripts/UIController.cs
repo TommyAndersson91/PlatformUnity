@@ -6,11 +6,27 @@ using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
-  private Button BackToMenu;
+  public Button BackToMenu;
+  public Button FireButton;
+  public GameObject player;
+  public Joystick joystick;
+
 
   private void Start() {
-    BackToMenu = transform.GetChild(3).GetComponent<Button>();
+    player = GameObject.Find("Player");
     BackToMenu.onClick.AddListener(GoMenu);
+    FireButton.onClick.AddListener(player.GetComponent<PlayerController>().Shoot);
+  }
+
+  private void Update() {
+    if (player.GetComponent<PlayerController>().fireBalls > 0)
+    {
+      FireButton.gameObject.SetActive(true);
+    }
+    else if (player.GetComponent<PlayerController>().fireBalls == 0 && FireButton.IsActive())
+    {
+      FireButton.gameObject.SetActive(false);
+    }
   }
 
   private void GoMenu()
