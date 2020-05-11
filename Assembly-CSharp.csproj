@@ -45,13 +45,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\AttackBehavior.cs" />
-     <Compile Include="Assets\BossEagleController.cs" />
-     <Compile Include="Assets\BossFrog.cs" />
-     <Compile Include="Assets\BossLevelLogic.cs" />
-     <Compile Include="Assets\DeathBehavior.cs" />
-     <Compile Include="Assets\HitBehavior.cs" />
-     <Compile Include="Assets\IdleBehavior.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
@@ -59,21 +52,28 @@
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
-     <Compile Include="Assets\RunBehavior.cs" />
+     <Compile Include="Assets\Scripts\Boss\Animation Behaviors\AttackBehavior.cs" />
+     <Compile Include="Assets\Scripts\Boss\Animation Behaviors\DeathBehavior.cs" />
+     <Compile Include="Assets\Scripts\Boss\Animation Behaviors\HitBehavior.cs" />
+     <Compile Include="Assets\Scripts\Boss\Animation Behaviors\IdleBehavior.cs" />
+     <Compile Include="Assets\Scripts\Boss\Animation Behaviors\RunBehavior.cs" />
+     <Compile Include="Assets\Scripts\Boss\Animation Behaviors\WalkBehavior.cs" />
      <Compile Include="Assets\Scripts\Boss\Boss.cs" />
-     <Compile Include="Assets\Scripts\CameraController.cs" />
-     <Compile Include="Assets\Scripts\EagleController.cs" />
+     <Compile Include="Assets\Scripts\Boss\BossEagleController.cs" />
+     <Compile Include="Assets\Scripts\Boss\BossFrog.cs" />
+     <Compile Include="Assets\Scripts\Boss\BossLevelLogic.cs" />
+     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\FireController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\UIController.cs" />
+     <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
+     <Compile Include="Assets\Scripts\Enemy Controllers\EagleController.cs" />
+     <Compile Include="Assets\Scripts\Enemy Controllers\FrogController.cs" />
+     <Compile Include="Assets\Scripts\Enemy Controllers\OpossumController.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
-     <Compile Include="Assets\Scripts\FireController.cs" />
-     <Compile Include="Assets\Scripts\FrogController.cs" />
      <Compile Include="Assets\Scripts\MenuLogic.cs" />
-     <Compile Include="Assets\Scripts\OpossumController.cs" />
-     <Compile Include="Assets\Scripts\PlayerController.cs" />
-     <Compile Include="Assets\Scripts\PlayerData.cs" />
      <Compile Include="Assets\Scripts\SaveSystem.cs" />
-     <Compile Include="Assets\Scripts\UIController.cs" />
      <Compile Include="Assets\TooCubeForest\demoScenes\Movement.cs" />
-     <Compile Include="Assets\WalkBehavior.cs" />
      <None Include="Assets\Pixel Art Icon Pack - RPG\Shader\SH UI Icon Outline Color.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -153,12 +153,6 @@
  </Reference>
  <Reference Include="UnityEngine.ClothModule">
  <HintPath>/Users/tommyandersson/Desktop/Unity Editor/2019.3.0f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.ClusterInputModule">
- <HintPath>/Users/tommyandersson/Desktop/Unity Editor/2019.3.0f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.ClusterRendererModule">
- <HintPath>/Users/tommyandersson/Desktop/Unity Editor/2019.3.0f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>/Users/tommyandersson/Desktop/Unity Editor/2019.3.0f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
