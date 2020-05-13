@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
   private bool isDeadByFalling = false;
   public bool isWorldOneComplete = false;
   private bool isJumping;
+  private bool isPlayingComputer = false;
 
   private Joystick joystick;
 
@@ -93,6 +94,11 @@ public class PlayerController : MonoBehaviour
 
   private void Start()
   {
+    if (Application.platform == RuntimePlatform.OSXEditor)
+    {
+      isPlayingComputer = true;
+    }
+    Debug.Log(isPlayingComputer);
     joystick = GameObject.Find("PlayerUI").GetComponent<UIController>().joystick;
     rb = GetComponent<Rigidbody2D>();
     playerAnimator = GetComponent<Animator>();
@@ -109,7 +115,7 @@ public class PlayerController : MonoBehaviour
     }
 
     fJumpPressedRemember -= Time.deltaTime;
-    if (joystick.Vertical > .5f)
+    if (joystick.Vertical > .5f || Input.GetButtonDown("Jump"))
       // if (Input.GetButtonDown("Jump"))
       {
       fJumpPressedRemember = fJumpPressedRememberTime;
@@ -145,13 +151,13 @@ public class PlayerController : MonoBehaviour
 
   private void Movement()
   {
-    // float hDirection = Input.GetAxis("Horizontal");
+    float kDirection = Input.GetAxis("Horizontal");
 
     float hDirection = joystick.Horizontal;
 
 
     //Moving Left
-    if (hDirection < -.2f && !isJumping || fGroundedRemember > 0.2f && hDirection < 0)
+    if (hDirection < -.2f && !isJumping || fGroundedRemember > 0.2f && hDirection < 0 || isPlayingComputer && kDirection < 0)
     {
       rb.velocity = new Vector2(-speed, rb.velocity.y);
       if (!isRotated)
@@ -165,7 +171,7 @@ public class PlayerController : MonoBehaviour
       }
     }
     //Moving RIght
-    else if (hDirection > .2f && !isJumping || fGroundedRemember > 0.2f && hDirection > 0)
+    else if (hDirection > .2f && !isJumping || fGroundedRemember > 0.2f && hDirection > 0 || isPlayingComputer && kDirection > 0)
     {
       rb.velocity = new Vector2(speed, rb.velocity.y);
       if (isRotated)
@@ -181,7 +187,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Jumping
-    if ((fJumpPressedRemember > 0) && (fGroundedRemember > 0))
+    if (fJumpPressedRemember > 0 && fGroundedRemember > 0)
     {
       fJumpPressedRemember = 0;
       fGroundedRemember = 0;
@@ -190,7 +196,7 @@ public class PlayerController : MonoBehaviour
       jumpTimeCounter = jumpTime;
       state = State.jumping;
     }
-    if (jumpTimeCounter > 0 && isJumping && joystick.Vertical > .5f)
+    if (jumpTimeCounter > 0 && isJumping && joystick.Vertical > .5f || jumpTimeCounter > 0 && isJumping && isPlayingComputer)
     {
       rb.velocity = new Vector2(rb.velocity.x, jumpForce);
       jumpTimeCounter -= Time.deltaTime;
@@ -199,7 +205,7 @@ public class PlayerController : MonoBehaviour
     {
       isJumping = false;
     }
-    if (joystick.Vertical < .5f)
+    if (joystick.Vertical < .5f && !isPlayingComputer || Input.GetKeyUp(KeyCode.Space))
       // if (Input.GetKeyUp(KeyCode.Space))
       {
       isJumping = false;

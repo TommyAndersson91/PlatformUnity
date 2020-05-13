@@ -27,6 +27,7 @@ public class RotatingPlatform : MonoBehaviour
       }
     }
   }
+  
   private void OnCollisionEnter2D(Collision2D other)
   {
     if (other.gameObject.tag == "Player" && !isRotated)
@@ -35,16 +36,4 @@ public class RotatingPlatform : MonoBehaviour
       isRotated = true;
     }
   }
-
-  private void OnTriggerEnter2D(Collider2D other)
-  {
-
-  }
-  // private void OnCollisionExit2D(Collision2D other)
-  // {
-  //   if (other.gameObject.tag == "Player")
-  //   {
-  //     anim.SetTrigger("rotateback");
-  //   }
-  // }
 }
