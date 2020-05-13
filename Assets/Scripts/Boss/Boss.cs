@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Boss : MonoBehaviour
 {
 
-  public int health = 20;
+  public int health = 100;
   private enum State { idle, walk, running, jumping, falling, hurt, dead }
   public Image healthBar;
   public Text healthText;
