@@ -24,21 +24,24 @@ public class BossLevelLogic : MonoBehaviour
     }
     else
     {
-        timer -= Time.deltaTime;
+      timer -= Time.deltaTime;
     }
   }
 
   public void SpawnEagles()
   {
-    Instantiate(eagle, new Vector2(Random.Range(-35f, 25f), 30f), transform.rotation);
-    Instantiate(eagle, new Vector2(Random.Range(-35f, 25f), 30f), transform.rotation);
+    for (int i = 0; i < Random.Range(0, 4); i++)
+    {
+      Instantiate(eagle, new Vector2(Random.Range(-35f, 25f), 30f), transform.rotation);
+    }
   }
 
   public void SpawnFrogs()
   {
-    Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);
-    Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);
-    Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);
-    Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);
+    for (int i = 0; i < Random.Range(2, 7); i++)
+    {
+      Instantiate(frog, new Vector2(Random.Range(-35f, 25f), 20f), transform.rotation);
+
+    }
   }
 }

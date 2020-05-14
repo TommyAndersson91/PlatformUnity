@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Boss : MonoBehaviour
 {
 
-  public int health = 100;
+  public int health;
   private enum State { idle, walk, running, jumping, falling, hurt, dead }
   public Image healthBar;
   public Text healthText;
@@ -17,11 +18,14 @@ public class Boss : MonoBehaviour
   public Collider2D playerColl;
   public Rigidbody2D rb;
   public Animator anim;
+  public GameObject player;
+  public GameObject completeText;
 
 
   // Start is called before the first frame update
   void Start()
   {
+    player = GameObject.FindGameObjectWithTag("Player");
     rb = GetComponent<Rigidbody2D>();
     playerColl = GameObject.FindGameObjectWithTag("Player").GetComponent<CapsuleCollider2D>();
     anim = GetComponent<Animator>();
@@ -48,7 +52,24 @@ public class Boss : MonoBehaviour
     }
     if (health <= 0)
     {
+      GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+      foreach (GameObject enemy in enemies)
+      {
+        Destroy(enemy, 2f);
+      }
       anim.SetTrigger("dead");
+      if (!player.GetComponent<PlayerController>().isWorldOneComplete)
+      {
+        player.GetComponent<PlayerController>().isWorldOneComplete = true;
+        player.GetComponent<PlayerController>().SavePlayer();
+      }
     }
+  }
+
+  private void OnDestroy()
+  {
+    completeText.SetActive(true);
+    GameObject.Find("LevelLoader").GetComponent<LevelLoader>().transisitionTime = 3f;
+    GameObject.Find("LevelLoader").GetComponent<LevelLoader>().LoadMenu();
   }
 }

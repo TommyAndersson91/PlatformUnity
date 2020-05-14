@@ -52,8 +52,6 @@
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
-     <Compile Include="Assets\RotateBackBehavior.cs" />
-     <Compile Include="Assets\RotatingPlatform.cs" />
      <Compile Include="Assets\Scripts\Boss\Animation Behaviors\AttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Boss\Animation Behaviors\DeathBehavior.cs" />
      <Compile Include="Assets\Scripts\Boss\Animation Behaviors\HitBehavior.cs" />
@@ -73,8 +71,10 @@
      <Compile Include="Assets\Scripts\Enemy Controllers\FrogController.cs" />
      <Compile Include="Assets\Scripts\Enemy Controllers\OpossumController.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
+     <Compile Include="Assets\Scripts\LevelLoader.cs" />
      <Compile Include="Assets\Scripts\MenuLogic.cs" />
      <Compile Include="Assets\Scripts\MovingPlatform.cs" />
+     <Compile Include="Assets\Scripts\RotatingPlatform.cs" />
      <Compile Include="Assets\Scripts\SaveSystem.cs" />
      <Compile Include="Assets\TooCubeForest\demoScenes\Movement.cs" />
      <None Include="Assets\Pixel Art Icon Pack - RPG\Shader\SH UI Icon Outline Color.shader" />

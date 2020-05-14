@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private GameObject Heart;
   [SerializeField] private Transform HeartsHolder;
   [SerializeField] private Collider2D feetColl;
+  [SerializeField] private GameObject falled;
 
   private int cherries;
   public int Cherries
@@ -98,8 +99,10 @@ public class PlayerController : MonoBehaviour
     {
       isPlayingComputer = true;
     }
-    Debug.Log(isPlayingComputer);
+    Debug.Log(isWorldOneComplete);
     joystick = GameObject.Find("PlayerUI").GetComponent<UIController>().joystick;
+    if (isPlayingComputer)
+    joystick.gameObject.SetActive(false);
     rb = GetComponent<Rigidbody2D>();
     playerAnimator = GetComponent<Animator>();
     coll = GetComponent<Collider2D>();
@@ -128,10 +131,10 @@ public class PlayerController : MonoBehaviour
     //sets animation based on Enumerator state
     playerAnimator.SetInteger("state", (int)state);
     if (rb.position.y < -15f)
-    {
+  {
       isDeadByFalling = true;
       Lives -= 1;
-    }
+  }
   }
 
  public void Shoot()
@@ -244,7 +247,7 @@ public class PlayerController : MonoBehaviour
 
   private void UpdateHeartsGrid(int value)
   {
-    if (value == 0 && SceneManager.GetActiveScene().buildIndex != 0)
+    if (value <= 0)
     {
       level = 1;
       Lives = 3;
@@ -337,19 +340,10 @@ public class PlayerController : MonoBehaviour
     }
     else if (other.gameObject.tag == "House")
     {
-      if (!SceneManager.GetActiveScene().name.Contains("3"))
-      {
-        level = SceneManager.GetActiveScene().buildIndex + 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        Debug.Log("Level saved as " + level);
         SavePlayer();
-      }
-      else
-      {
-        isWorldOneComplete = true;
+        GameObject.Find("LevelLoader").GetComponent<LevelLoader>().LoadNextLevel();
       }
     }
-  }
 
   private void OnCollisionExit2D(Collision2D other)
   {
