@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2473909875242859086}
   m_Layer: 0
   m_Name: Forest_deco_woodenThorns_7
-  m_TagString: Spikes
+  m_TagString: SpikeLeft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -390,7 +390,19 @@ public class PlayerController : MonoBehaviour
           Destroy(GameObject.Find("Block").gameObject);
         }
       }
-      else if (other.gameObject.tag == "Spikes")
+      else if (other.gameObject.tag == "SpikeUp" && rb.position.y > other.transform.position.y && state == State.falling)
+      {
+        TakeDamage(other.transform);
+      }
+      else if (other.gameObject.tag == "SpikeDown" && rb.position.y < other.transform.position.y || state == State.jumping)
+      {
+        TakeDamage(other.transform);
+      }
+      else if (other.gameObject.tag == "SpikeLeft" && rb.position.x < other.transform.position.x)
+      {
+        TakeDamage(other.transform);
+      }
+      else if (other.gameObject.tag == "SpikeRight" && rb.position.x > other.transform.position.x)
       {
         TakeDamage(other.transform);
       }

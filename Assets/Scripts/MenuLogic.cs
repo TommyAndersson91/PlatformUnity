@@ -10,14 +10,14 @@ public class MenuLogic : MonoBehaviour
 {
   [SerializeField] private Button PlayLevelOne;
   [SerializeField] private Button PlayLevelTwo;
-  
+
 
   private void Start()
   {
     PlayLevelOne.onClick.AddListener(PlayLevel);
-    PlayLevelTwo.onClick.AddListener(PlayLevel);
+    PlayLevelTwo.onClick.AddListener(PlayWorldTwo);
     PlayLevelTwo.gameObject.SetActive(false);
-    PlayerData data = SaveSystem.LoadPlayer(); 
+    PlayerData data = SaveSystem.LoadPlayer();
     if (data != null)
     {
       Debug.Log("The Level at menu is " + data.level);
@@ -25,29 +25,41 @@ public class MenuLogic : MonoBehaviour
       Debug.Log("World one is completed? : " + data.isWorldOneComplete);
 
       if (data.isWorldOneComplete == true)
-     {
-       PlayLevelTwo.gameObject.SetActive(true);
-     }
+      {
+        PlayLevelTwo.gameObject.SetActive(true);
+      }
     }
-      
-    
+
+
   }
 
 
   private void PlayLevel()
   {
     PlayerData data = SaveSystem.LoadPlayer();
-    
+
     if (data != null)
     {
-    SceneManager.LoadScene(data.level);
+      SceneManager.LoadScene(data.level);
     }
     else
     {
       SceneManager.LoadScene("Level1");
-
     }
-  } 
+  }
+  private void PlayWorldTwo()
+  {
+    PlayerData data = SaveSystem.LoadPlayer();
+
+    if (data != null && data.level > 5)
+    {
+      SceneManager.LoadScene(data.level);
+    }
+    else
+    {
+      SceneManager.LoadScene("Level4");
+    }
+  }
 }
 
 
