@@ -16,7 +16,14 @@ public class LevelLoader : MonoBehaviour
 
   public void LoadNextLevel()
   {
-    StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+    if (SceneManager.GetActiveScene().buildIndex+1 < SceneManager.sceneCountInBuildSettings)
+    {
+      StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+    }
+    else
+    {
+      LoadMenu();
+    }
   }
 
   public void LoadMenu()
