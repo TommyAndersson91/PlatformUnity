@@ -273,6 +273,7 @@ public class PlayerController : MonoBehaviour
           return;
         }
         GameObject heart = Instantiate(Heart, new Vector3(0, 0, 10), Quaternion.identity) as GameObject;
+        heart.transform.localScale = new Vector3(1.5f, 1.5f, 0);
         heart.transform.SetParent(HeartsHolder);
       }
     }
