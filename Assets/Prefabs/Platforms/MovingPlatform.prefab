@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3036334345074545642}
   m_Layer: 8
   m_Name: MovingPlatform
-  m_TagString: Untagged
+  m_TagString: MovingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,6 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc236a50597d44c05b3b48fdc486845f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 4
+  movingRange: 0
+  isHorizontal: 0
+  body: {fileID: 0}
 --- !u!50 &3036334345074545645
 Rigidbody2D:
   serializedVersion: 4
@@ -115,7 +119,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 6fa19221491b4499c80c245554ed2a94, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &3036334345074545642
 BoxCollider2D:

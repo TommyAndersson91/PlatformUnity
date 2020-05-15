@@ -17,6 +17,7 @@ TagManager:
   - SpikeDown
   - SpikeRight
   - SpikeLeft
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX

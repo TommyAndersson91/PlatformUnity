@@ -11,10 +11,12 @@ public class MovingPlatform : MonoBehaviour
   private Vector3 startingPos;
   private bool isFinished = false;
   public bool isHorizontal = false;
+  public Rigidbody2D body;
 
   // Start is called before the first frame update
   void Start()
   {
+    body = GetComponent<Rigidbody2D>();
     startingPos = transform.position;
     if (isHorizontal)
     {
@@ -22,7 +24,7 @@ public class MovingPlatform : MonoBehaviour
     }
     else
     {
-      target = new Vector3(transform.position.x , transform.position.y + movingRange, transform.position.z);
+      target = new Vector3(transform.position.x, transform.position.y + movingRange, transform.position.z);
     }
   }
 
@@ -48,19 +50,23 @@ public class MovingPlatform : MonoBehaviour
     }
   }
 
-  private void OnCollisionEnter2D(Collision2D other)
-  {
-    if (other.gameObject.tag == "Player")
-    {
-      other.transform.SetParent(transform);
-    }
-  }
-
   private void OnCollisionExit2D(Collision2D other)
   {
+    other.transform.SetParent(null);
+  }
+
+  private void OnCollisionStay2D(Collision2D other)
+  {
     if (other.gameObject.tag == "Player")
     {
-      other.transform.SetParent(null);
+      if (other.rigidbody.velocity.x > 1.2f || other.rigidbody.velocity.x < -1.2f && other.transform.parent == transform)
+      {
+        other.transform.SetParent(null);
+      }
+      if (other.transform.parent != transform)
+      {
+        other.transform.SetParent(transform);
+      }
     }
   }
 
