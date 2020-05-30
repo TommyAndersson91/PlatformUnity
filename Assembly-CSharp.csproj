@@ -45,7 +45,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\DragonWarriorController.cs" />
+     <Compile Include="Assets\DashwindController.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
@@ -65,9 +65,11 @@
      <Compile Include="Assets\Scripts\Boss\BossLevelLogic.cs" />
      <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
      <Compile Include="Assets\Scripts\Controllers\FireController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\FireballController.cs" />
      <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Controllers\UIController.cs" />
      <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
+     <Compile Include="Assets\Scripts\Enemy Controllers\DragonWarriorController.cs" />
      <Compile Include="Assets\Scripts\Enemy Controllers\EagleController.cs" />
      <Compile Include="Assets\Scripts\Enemy Controllers\FrogController.cs" />
      <Compile Include="Assets\Scripts\Enemy Controllers\OpossumController.cs" />
