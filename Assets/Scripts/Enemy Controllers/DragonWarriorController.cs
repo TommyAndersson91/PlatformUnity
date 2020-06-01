@@ -42,7 +42,6 @@ public class DragonWarriorController : MonoBehaviour
   void ShootFireball()
   {
     GameObject fireball = Instantiate(fireballPrefab, eyes.transform.position, transform.rotation);
-    Debug.Log(fireball.transform.position);
   }
 
   // Update is called once per frame
@@ -79,7 +78,7 @@ public class DragonWarriorController : MonoBehaviour
   IEnumerator DashwindTime()
   {
     float timePassed = 0;
-    while (timePassed < 0.4f)
+    while (timePassed < 0.5f)
     {
       if (playerColl.transform.position.x < transform.position.x && groundInfo.collider)
       {
@@ -123,7 +122,7 @@ public class DragonWarriorController : MonoBehaviour
     {
       transform.eulerAngles = new Vector3(0, -180, 0);
     }
-    else
+    else if (playerColl.transform.position.x > transform.position.x)
     {
       transform.eulerAngles = new Vector3(0, 0, 0);
     }
@@ -154,7 +153,6 @@ public class DragonWarriorController : MonoBehaviour
 
     if (fireballTimer <= 0)
     {
-      Debug.Log("Shooting fireball");
       ShootFireball();
       fireballTimer = 3f;
     }
