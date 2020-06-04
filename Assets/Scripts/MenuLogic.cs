@@ -10,12 +10,15 @@ public class MenuLogic : MonoBehaviour
 {
   [SerializeField] private Button PlayLevelOne;
   [SerializeField] private Button PlayLevelTwo;
+  [SerializeField] private Button SignOutButton;
+
 
 
   private void Start()
   {
     PlayLevelOne.onClick.AddListener(PlayLevel);
     PlayLevelTwo.onClick.AddListener(PlayWorldTwo);
+    SignOutButton.onClick.AddListener(SignOut);
     PlayLevelTwo.gameObject.SetActive(false);
     PlayerData data = SaveSystem.LoadPlayer();
     if (data != null)
@@ -29,10 +32,12 @@ public class MenuLogic : MonoBehaviour
         PlayLevelTwo.gameObject.SetActive(true);
       }
     }
-
-
   }
 
+  private void SignOut()
+  {
+    SceneManager.LoadScene("StartScene");
+  }
 
   private void PlayLevel()
   {
