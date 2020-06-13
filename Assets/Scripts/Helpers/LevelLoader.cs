@@ -16,13 +16,19 @@ public class LevelLoader : MonoBehaviour
 
   public void LoadNextLevel()
   {
-    if (SceneManager.GetActiveScene().buildIndex+1 < SceneManager.sceneCountInBuildSettings)
+    for (int i = 0; i < Constants.Levels.Length; i++)
     {
-      StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
-    }
-    else
-    {
-      LoadMenu();
+      
+      if (SceneManager.GetActiveScene().name == Constants.Levels[i] && i != Constants.Levels.Length - 1)
+      {
+        StartCoroutine(LoadLevelName(Constants.Levels[i+1]));
+        return;
+      }
+      else if (i == Constants.Levels.Length - 1)
+      {
+        LoadMenu();
+        return;
+      }
     }
   }
 
@@ -41,5 +47,12 @@ public class LevelLoader : MonoBehaviour
     transisition.SetTrigger("start");
     yield return new WaitForSeconds(transisitionTime);
     SceneManager.LoadScene(levelIndex);
+  }
+
+  IEnumerator LoadLevelName(string levelName)
+  {
+    transisition.SetTrigger("start");
+    yield return new WaitForSeconds(transisitionTime);
+    SceneManager.LoadScene(levelName);
   }
 }

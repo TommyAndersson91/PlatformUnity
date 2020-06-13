@@ -23,11 +23,11 @@ public class MenuLogic : MonoBehaviour
     PlayerData data = SaveSystem.LoadPlayer();
     if (data != null)
     {
-      Debug.Log("The Level at menu is " + data.level);
-      Debug.Log("The Lives at menu is " + data.health);
-      Debug.Log("World one is completed? : " + data.isWorldOneComplete);
-
-      if (data.isWorldOneComplete == true)
+      // Debug.Log("The Level at menu is " + data.level);
+      // Debug.Log("The Lives at menu is " + data.health);
+      // Debug.Log("World one is completed? : " + data.isWorldOneComplete);
+    Debug.Log(FirebaseController.user.userScore);
+      if (FirebaseController.user.userScore > 3)
       {
         PlayLevelTwo.gameObject.SetActive(true);
       }

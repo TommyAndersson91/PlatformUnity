@@ -342,6 +342,10 @@ public class PlayerController : MonoBehaviour
     else if (other.gameObject.tag == "House")
     {
         SavePlayer();
+        if (FirebaseController.GetUserScore() < SceneManager.GetActiveScene().buildIndex)
+        {
+          FirebaseController.UpdateUserScore(FirebaseController.GetUserScore()+1);
+        }
         GameObject.Find("LevelLoader").GetComponent<LevelLoader>().LoadNextLevel();
       }
     }

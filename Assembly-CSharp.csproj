@@ -93,6 +93,7 @@
      <Compile Include="Assets\Scripts\Controllers\FireballController.cs" />
      <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Controllers\UIController.cs" />
+     <Compile Include="Assets\Scripts\Data\Constants.cs" />
      <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
      <Compile Include="Assets\Scripts\Enemy Controllers\DragonWarriorController.cs" />
      <Compile Include="Assets\Scripts\Enemy Controllers\EagleController.cs" />
@@ -100,6 +101,7 @@
      <Compile Include="Assets\Scripts\Enemy Controllers\OpossumController.cs" />
      <Compile Include="Assets\Scripts\Extensions\StringExtension.cs" />
      <Compile Include="Assets\Scripts\Firebase\EmailConfirmationInfo.cs" />
+     <Compile Include="Assets\Scripts\Firebase\FirebaseController.cs" />
      <Compile Include="Assets\Scripts\Firebase\PlayerScore.cs" />
      <Compile Include="Assets\Scripts\Firebase\SignResponse.cs" />
      <Compile Include="Assets\Scripts\Firebase\SignUp.cs" />

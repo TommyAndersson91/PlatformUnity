@@ -171,6 +171,7 @@ public class PlayerScore : MonoBehaviour
           {
             idToken = response.idToken;
             localId = response.localId;
+            RetrieveFromDatabase();
             Debug.Log("Successfully logged in");
           }
           else

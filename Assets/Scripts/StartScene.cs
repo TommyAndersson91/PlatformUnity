@@ -18,8 +18,11 @@ public class StartScene : MonoBehaviour
 
   private static fsSerializer serializer = new fsSerializer();
 
+  User user = new User();
+
   private string idToken;
   private string localId;
+  private string databaseUrl = "https://unityplatformer-1adde.firebaseio.com/users/";
 
   private void Start() {
     signInButton.onClick.AddListener(OnSignInUserButton);
@@ -34,6 +37,31 @@ public class StartScene : MonoBehaviour
   public void OnSignInUserButton()
   {
     SignInUser(emailInput.text, passwordInput.text);
+  }
+
+  private void RetrieveFromDatabase()
+  {
+    // User user = new User();
+    RestClient.Get<User>(databaseUrl + localId + ".json?auth=" + idToken).Then(response =>
+      {
+        user = response;
+        FirebaseController.user = user;
+        FirebaseController.idToken = idToken;
+        GameObject.Find("LevelLoader").GetComponent<LevelLoader>().LoadMenu();
+      });
+  }
+
+  public void UpdateUserScore (int score)
+  {
+    user.userScore = score;
+    RestClient.Put(databaseUrl + localId + ".json?auth=" + idToken, user).Then(
+      response =>
+      {
+        Debug.Log("Updated Users score");
+      }).Catch(error =>
+       {
+         Debug.Log(error);
+       });
   }
 
   private void SignInUser(string email, string password)
@@ -56,7 +84,7 @@ public class StartScene : MonoBehaviour
            idToken = response.idToken;
            localId = response.localId;
            errorText.text ="Successfully logged in!";
-           GameObject.Find("LevelLoader").GetComponent<LevelLoader>().LoadMenu();
+           RetrieveFromDatabase();
          }
          else
          {
